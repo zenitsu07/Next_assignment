@@ -1,26 +1,29 @@
 "use client"
 import React, { useState } from 'react';
 import { TextField, Button, Select, MenuItem, FormControl, InputLabel, Container, Grid, Typography, Paper } from '@mui/material';
-
+import connection from '../app/api/_middleware.js'
 const batches = ['6-7AM', '7-8AM', '8-9AM', '5-6PM'];
 
-const YogaForm = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    age: '',
-    selectedBatch: '',
-  });
-
-  const [errorMessage, setErrorMessage] = useState('');
-
-  const handleInputChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
+  const YogaForm = () => {
+    const [formData, setFormData] = useState({
+      name: '',
+      age: '',
+      selectedBatch: '',
     });
-  };
+
+    const [errorMessage, setErrorMessage] = useState(''); 
+
+    const handleInputChange = (e) => {
+
+      setFormData({
+        ...formData,
+        [e.target.name]: e.target.value,
+      });
+
+    };
 
   const handleSubmit = async () => {
+
     const { name, age } = formData;
     let updatedFormData = { ...formData };
     console.log(name,age)
@@ -32,14 +35,20 @@ const YogaForm = () => {
       } else {
         setErrorMessage('');
       }
-
     // Perform other validations (if needed)
-    const response = fetch('/admission',{
-      method:'POST',
-      body: formData
-    })
+    const response = await fetch('/api/admission', {
+      method: 'POST',
+      body: JSON.stringify(formData),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+  
+    // Handle response from the API
+  
     // Perform API call or other actions
     console.log('Form data submitted:', formData);
+
   };
 
   return (

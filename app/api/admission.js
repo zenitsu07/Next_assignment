@@ -3,9 +3,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import mongoose from 'next-connect';
 import Admission from '../../model/Admission.js';
-
-const CompletePayment = async 
-
+import connectMiddleware from './_middleware.js'
 const handler = mongoose()
   .use( async (req, res, next) => {
     // Middleware to validate form data (age, class selection, etc.)
